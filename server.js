@@ -5,12 +5,16 @@ const archiver = require('archiver');
 const cors = require('cors');
 const path = require('path');
 const https = require('https');
-const puppeteer = require('puppeteer-core');
+const puppeteer = require('puppeteer');
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
-const CHROME_PATH = 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe';
+// En Windows local usa Chrome instalado; en Linux (Render) usa el Chromium de puppeteer
+const IS_LINUX = process.platform === 'linux';
+const CHROME_PATH = IS_LINUX
+  ? null  // puppeteer descarga Chromium automáticamente
+  : 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe';
 
 app.use(cors());
 app.use(express.json({ limit: '50mb' }));
@@ -77,18 +81,22 @@ function isLogoOrBrandImage(src, alt, width, height) {
 
 // ============ SCRAPING CON PUPPETEER ============
 async function scrapeWithPuppeteer(url) {
-  const browser = await puppeteer.launch({
-    executablePath: CHROME_PATH,
+  const launchOptions = {
     headless: 'new',
+    ignoreHTTPSErrors: true,
     args: [
       '--no-sandbox',
       '--disable-setuid-sandbox',
+      '--disable-dev-shm-usage',
+      '--disable-gpu',
       '--disable-blink-features=AutomationControlled',
       '--disable-features=IsolateOrigins,site-per-process',
       '--window-size=1440,900'
-    ],
-    ignoreHTTPSErrors: true
-  });
+    ]
+  };
+  if (CHROME_PATH) launchOptions.executablePath = CHROME_PATH;
+
+  const browser = await puppeteer.launch(launchOptions);
 
   try {
     const page = await browser.newPage();
