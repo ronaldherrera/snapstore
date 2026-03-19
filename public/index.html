@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SnapStore</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- Fondo -->
+  <div class="scene" aria-hidden="true">
+    <div class="grid-overlay"></div>
+    <div class="prism-dispersion"></div>
+  </div>
+
+  <div class="app">
+    <!-- Header -->
+    <header class="header">
+      <div class="header-inner">
+        <div class="logo">
+          <span class="logo-main">Snap</span><span class="logo-sub">Store</span>
+        </div>
+        <nav class="header-nav" id="headerActions">
+          <span class="nav-stat" id="countBadge" style="display:none">0 productos</span>
+          <button class="btn-nav-action" id="btnClear" onclick="clearAll()" style="display:none">
+            NUEVA BÚSQUEDA &nbsp;→
+          </button>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Search panel -->
+    <section class="search-section">
+      <!-- Prisma SVG -->
+      <div class="hero-prism" aria-hidden="true">
+        <svg class="prism-svg" viewBox="0 0 800 480" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Arcos de luz dispersada -->
+          <defs>
+            <radialGradient id="rg1" cx="50%" cy="100%" r="80%"><stop offset="0%" stop-color="#00e5ff" stop-opacity="0.5"/><stop offset="100%" stop-color="#00e5ff" stop-opacity="0"/></radialGradient>
+            <radialGradient id="rg2" cx="50%" cy="100%" r="80%"><stop offset="0%" stop-color="#00ff88" stop-opacity="0.45"/><stop offset="100%" stop-color="#00ff88" stop-opacity="0"/></radialGradient>
+            <radialGradient id="rg3" cx="50%" cy="100%" r="80%"><stop offset="0%" stop-color="#c6ff00" stop-opacity="0.4"/><stop offset="100%" stop-color="#c6ff00" stop-opacity="0"/></radialGradient>
+            <radialGradient id="rg4" cx="50%" cy="100%" r="80%"><stop offset="0%" stop-color="#ffe600" stop-opacity="0.35"/><stop offset="100%" stop-color="#ffe600" stop-opacity="0"/></radialGradient>
+            <radialGradient id="rg5" cx="50%" cy="100%" r="80%"><stop offset="0%" stop-color="#ff9800" stop-opacity="0.3"/><stop offset="100%" stop-color="#ff9800" stop-opacity="0"/></radialGradient>
+            <clipPath id="fanLeft"><polygon points="400,420 0,0 400,0"/></clipPath>
+            <clipPath id="fanRight"><polygon points="400,420 400,0 800,0"/></clipPath>
+            <clipPath id="fanFull"><polygon points="400,420 60,0 740,0"/></clipPath>
+          </defs>
+          <!-- Líneas concéntricas izquierda (azul→cian) -->
+          <g clip-path="url(#fanLeft)" opacity="0.55">
+            <circle cx="400" cy="420" r="80"  stroke="#00e5ff" stroke-width="0.6" fill="none"/>
+            <circle cx="400" cy="420" r="110" stroke="#00cfff" stroke-width="0.6" fill="none"/>
+            <circle cx="400" cy="420" r="145" stroke="#00b8ff" stroke-width="0.6" fill="none"/>
+            <circle cx="400" cy="420" r="185" stroke="#00a0ff" stroke-width="0.6" fill="none"/>
+            <circle cx="400" cy="420" r="230" stroke="#0090ff" stroke-width="0.6" fill="none"/>
+            <circle cx="400" cy="420" r="280" stroke="#0070ff" stroke-width="0.6" fill="none"/>
+            <circle cx="400" cy="420" r="335" stroke="#0055ee" stroke-width="0.6" fill="none"/>
+            <circle cx="400" cy="420" r="395" stroke="#0040cc" stroke-width="0.6" fill="none"/>
+            <circle cx="400" cy="420" r="460" stroke="#0030aa" stroke-width="0.5" fill="none"/>
+            <circle cx="400" cy="420" r="530" stroke="#0020884" stroke-width="0.5" fill="none"/>
+          </g>
+          <!-- Líneas concéntricas centro-izq (verde) -->
+          <g clip-path="url(#fanFull)" opacity="0.4">
+            <circle cx="400" cy="420" r="90"  stroke="#00ff88" stroke-width="0.5" fill="none"/>
+            <circle cx="400" cy="420" r="130" stroke="#00ee77" stroke-width="0.5" fill="none"/>
+            <circle cx="400" cy="420" r="175" stroke="#00dd66" stroke-width="0.5" fill="none"/>
+            <circle cx="400" cy="420" r="225" stroke="#44ee44" stroke-width="0.5" fill="none"/>
+            <circle cx="400" cy="420" r="280" stroke="#66dd33" stroke-width="0.5" fill="none"/>
+            <circle cx="400" cy="420" r="340" stroke="#88cc22" stroke-width="0.5" fill="none"/>
+            <circle cx="400" cy="420" r="405" stroke="#aacc00" stroke-width="0.5" fill="none"/>
+            <circle cx="400" cy="420" r="475" stroke="#cccc00" stroke-width="0.4" fill="none"/>
+          </g>
+          <!-- Líneas concéntricas derecha (amarillo→naranja→rojo) -->
+          <g clip-path="url(#fanRight)" opacity="0.5">
+            <circle cx="400" cy="420" r="85"  stroke="#ffe600" stroke-width="0.6" fill="none"/>
+            <circle cx="400" cy="420" r="120" stroke="#ffcc00" stroke-width="0.6" fill="none"/>
+            <circle cx="400" cy="420" r="160" stroke="#ffaa00" stroke-width="0.6" fill="none"/>
+            <circle cx="400" cy="420" r="205" stroke="#ff8800" stroke-width="0.6" fill="none"/>
+            <circle cx="400" cy="420" r="255" stroke="#ff6600" stroke-width="0.6" fill="none"/>
+            <circle cx="400" cy="420" r="310" stroke="#ff4400" stroke-width="0.6" fill="none"/>
+            <circle cx="400" cy="420" r="370" stroke="#ff2200" stroke-width="0.6" fill="none"/>
+            <circle cx="400" cy="420" r="435" stroke="#ee1100" stroke-width="0.5" fill="none"/>
+            <circle cx="400" cy="420" r="505" stroke="#cc0000" stroke-width="0.5" fill="none"/>
+          </g>
+          <!-- Prisma triangular -->
+          <g transform="translate(400,420)">
+            <polygon points="0,-95 -55,0 55,0" fill="none" stroke="rgba(255,255,255,0.35)" stroke-width="1"/>
+            <polygon points="0,-90 -50,0 50,0" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="3"/>
+            <!-- Facetas internas del prisma -->
+            <line x1="0" y1="-90" x2="-25" y2="0" stroke="rgba(255,255,255,0.08)" stroke-width="0.5"/>
+            <line x1="0" y1="-90" x2="25" y2="0" stroke="rgba(255,255,255,0.08)" stroke-width="0.5"/>
+            <line x1="0" y1="-70" x2="-40" y2="0" stroke="rgba(255,255,255,0.05)" stroke-width="0.5"/>
+            <line x1="0" y1="-70" x2="40" y2="0" stroke="rgba(255,255,255,0.05)" stroke-width="0.5"/>
+            <!-- Rayo entrante -->
+            <line x1="-130" y1="-60" x2="0" y2="-60" stroke="rgba(255,255,255,0.5)" stroke-width="0.8"/>
+            <line x1="-130" y1="-60" x2="-140" y2="-60" stroke="rgba(255,255,255,0.2)" stroke-width="0.6"/>
+          </g>
+        </svg>
+        <!-- Glow difuso debajo del prisma -->
+        <div class="prism-glow"></div>
+      </div>
+      <div class="search-card">
+        <h2 class="search-title">Ingresa la URL de la tienda o catálogo</h2>
+        <p class="search-subtitle">La app buscará los productos y sus imágenes automáticamente</p>
+        <div class="search-row">
+          <div class="input-wrapper">
+            <svg class="input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+            </svg>
+            <input
+              type="url"
+              id="urlInput"
+              class="url-input"
+              placeholder="https://tienda.ejemplo.com/productos"
+              autocomplete="off"
+            />
+          </div>
+          <button class="btn btn-primary" id="btnScrape" onclick="scrapeUrl()">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+            </svg>
+            Buscar productos
+          </button>
+        </div>
+        <div class="error-box" id="errorBox" style="display:none"></div>
+        <div class="warning-box" id="warningBox" style="display:none"></div>
+      </div>
+    </section>
+
+    <!-- Loading -->
+    <div class="loading-overlay" id="loadingOverlay" style="display:none">
+      <div class="loading-card">
+        <div class="spinner"></div>
+        <p>Escaneando la página...</p>
+        <small>Esto puede tardar unos segundos</small>
+      </div>
+    </div>
+
+    <!-- Results -->
+    <section class="results-section" id="resultsSection" style="display:none">
+      <!-- Toolbar -->
+      <div class="toolbar">
+        <div class="toolbar-left">
+          <h3 class="results-title">
+            Productos encontrados
+            <span class="results-count" id="resultsCount"></span>
+          </h3>
+        </div>
+        <div class="toolbar-right">
+          <div class="view-toggle">
+            <button class="view-btn active" id="viewGrid" onclick="setView('grid')" title="Vista cuadrícula">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+                <rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/>
+              </svg>
+            </button>
+            <button class="view-btn" id="viewList" onclick="setView('list')" title="Vista lista">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/>
+                <line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/>
+                <line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/>
+              </svg>
+            </button>
+          </div>
+          <button class="btn btn-outline" id="btnSelectAll" onclick="toggleSelectAll()">Seleccionar todo</button>
+          <!-- Acciones sobre seleccionados -->
+          <button class="btn btn-danger" id="btnRemoveSelected" onclick="removeSelected()" style="display:none">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/>
+              <path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/>
+            </svg>
+            Quitar (<span id="removeCount">0</span>)
+          </button>
+          <button class="btn btn-purple" id="btnBgSelected" onclick="removeBgSelected()" style="display:none">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/>
+              <path d="M8 12h8M12 8v8"/>
+            </svg>
+            Quitar fondo (<span id="bgCount">0</span>)
+          </button>
+          <button class="btn btn-success" id="btnDownloadZip" onclick="downloadZip()" style="display:none">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+            Descargar ZIP (<span id="zipCount">0</span>)
+          </button>
+        </div>
+      </div>
+
+      <!-- Tolerance bar (visible when bg removal is active) -->
+      <div class="tolerance-bar" id="toleranceBar" style="display:none">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/>
+        </svg>
+        <span class="tolerance-label">Tolerancia de color:</span>
+        <input type="range" id="toleranceSlider" min="5" max="80" value="30" oninput="updateToleranceLabel(this.value)" />
+        <span class="tolerance-value" id="toleranceValue">30</span>
+      </div>
+
+      <!-- Product grid -->
+      <div class="product-grid" id="productGrid"></div>
+    </section>
+  </div>
+
+  <!-- Modal rename -->
+  <div class="modal-overlay" id="modalOverlay" style="display:none" onclick="closeModal(event)">
+    <div class="modal" id="modal">
+      <div class="modal-header">
+        <h4>Renombrar producto</h4>
+        <button class="modal-close" onclick="closeModal()">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-preview" id="modalPreview"></div>
+        <label class="form-label">Nombre del producto</label>
+        <input type="text" id="renameInput" class="form-input" placeholder="Nombre del producto" />
+        <p class="form-hint">
+          Nombre de archivo: <code id="slugPreview"></code>
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-ghost" onclick="closeModal()">Cancelar</button>
+        <button class="btn btn-primary" onclick="confirmRename()">Guardar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    Hecho con <span class="heart">&#10084;</span> por
+    <a href="https://www.linkedin.com/in/ronald-sc-herrera/" target="_blank" rel="noopener">Ronald Herrera</a>
+  </footer>
+
+  <!-- Toast -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
