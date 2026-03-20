@@ -463,6 +463,27 @@ body {
   font-size: 0.875rem;
   text-align: left;
   backdrop-filter: blur(8px);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.warning-download-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  align-self: flex-start;
+  padding: 6px 14px;
+  border: 1px solid rgba(245,158,11,0.4);
+  border-radius: 999px;
+  color: #fcd34d;
+  text-decoration: none;
+  font-size: 0.78rem;
+  font-weight: 600;
+  transition: all var(--transition);
+}
+.warning-download-btn:hover {
+  background: rgba(245,158,11,0.15);
+  border-color: rgba(245,158,11,0.7);
 }
 
 /* ============================================================

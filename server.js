@@ -413,7 +413,7 @@ app.post('/api/scrape', async (req, res) => {
     if (products.length === 0) {
       return res.json({
         products: [],
-        warning: 'No se encontraron productos. La página puede tener protección anti-bot avanzada o una estructura no reconocida.'
+        warning: 'No se encontraron productos. Esta página puede tener protección anti-bot avanzada que bloquea los servidores en la nube. Descarga la versión local para usarla directamente desde tu ordenador sin restricciones.'
       });
     }
 

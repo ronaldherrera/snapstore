@@ -562,7 +562,15 @@ function setSearchDisabled(d) {
 }
 function showError(msg) { const el = document.getElementById('errorBox'); el.textContent = msg; el.style.display = 'block'; }
 function hideError() { document.getElementById('errorBox').style.display = 'none'; }
-function showWarning(msg) { const el = document.getElementById('warningBox'); el.textContent = msg; el.style.display = 'block'; }
+function showWarning(msg) {
+  const el = document.getElementById('warningBox');
+  el.innerHTML = `<span>${msg}</span>
+    <a href="https://github.com/ronaldherrera/snapstore/releases/latest" target="_blank" rel="noopener" class="warning-download-btn">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      Descargar versión local
+    </a>`;
+  el.style.display = 'block';
+}
 function hideWarning() { document.getElementById('warningBox').style.display = 'none'; }
 
 function updateResultsCount() {
