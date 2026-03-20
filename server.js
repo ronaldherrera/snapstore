@@ -20,7 +20,7 @@ const CHROME_PATH = IS_LINUX
 async function getChromiumPath() {
   if (IS_LINUX) {
     const chromium = require('@sparticuz/chromium');
-    return await chromium.executablePath();
+    return await chromium.executablePath('/tmp');
   }
   return CHROME_PATH;
 }
@@ -100,6 +100,11 @@ async function scrapeWithPuppeteer(url) {
       '--disable-setuid-sandbox',
       '--disable-dev-shm-usage',
       '--disable-gpu',
+      '--disable-cache',
+      '--disk-cache-size=0',
+      '--no-first-run',
+      '--no-default-browser-check',
+      `--user-data-dir=/tmp/chrome-${Date.now()}`,
       '--disable-blink-features=AutomationControlled',
       '--disable-features=IsolateOrigins,site-per-process',
       '--window-size=1440,900'
