@@ -25,6 +25,7 @@
   "devDependencies": {
     "electron": "^41.0.3",
     "electron-builder": "^26.8.1",
+    "jimp": "^1.6.0",
     "nodemon": "^3.0.2"
   },
   "build": {
@@ -39,8 +40,10 @@
       "!node_modules/electron-builder/**",
       "!node_modules/nodemon/**"
     ],
+    "icon": "build/icon.png",
     "win": {
-      "target": [{ "target": "nsis", "arch": ["x64"] }]
+      "target": [{ "target": "nsis", "arch": ["x64"] }],
+      "icon": "build/icon.png"
     },
     "nsis": {
       "oneClick": true,
