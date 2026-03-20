@@ -18,9 +18,25 @@ const CHROME_PATH = IS_LINUX
   : 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe';
 
 async function getChromiumPath() {
+  // Variable de entorno manual (configurable en Render dashboard)
+  if (process.env.PUPPETEER_EXECUTABLE_PATH) return process.env.PUPPETEER_EXECUTABLE_PATH;
+
   if (IS_LINUX) {
+    // Probar Chromium del sistema primero (más ligero que @sparticuz)
+    const { existsSync } = require('fs');
+    const systemPaths = [
+      '/usr/bin/chromium',
+      '/usr/bin/chromium-browser',
+      '/usr/bin/google-chrome',
+      '/usr/bin/google-chrome-stable',
+      '/snap/bin/chromium',
+    ];
+    for (const p of systemPaths) {
+      if (existsSync(p)) return p;
+    }
+    // Fallback a @sparticuz/chromium
     const chromium = require('@sparticuz/chromium');
-    return await chromium.executablePath('/tmp');
+    return await chromium.executablePath();
   }
   return CHROME_PATH;
 }
@@ -273,7 +289,7 @@ async function autoScroll(page) {
   });
 }
 
-// ============ SCRAPING CON AXIOS (fallback) ============
+// ============ SCRAPING CON AXIOS (fallback genérico) ============
 async function scrapeWithAxios(url) {
   const response = await axios.get(url, {
     headers: {
@@ -287,39 +303,85 @@ async function scrapeWithAxios(url) {
   });
 
   const $ = cheerio.load(response.data);
+  const baseUrl = new URL(url).origin;
   const products = [];
   const seen = new Set();
 
-  const selectors = [
-    'li.product', 'article.product', '.product-item', '.product-card',
-    '[data-product-card]', '.grid__item', 'figure', '.card', '.item'
+  function resolveUrl(src) {
+    if (!src) return null;
+    if (src.startsWith('data:')) return null;
+    if (src.startsWith('//')) return 'https:' + src;
+    if (src.startsWith('/')) return baseUrl + src;
+    if (src.startsWith('http')) return src;
+    return null;
+  }
+
+  function getName($el, altText) {
+    // Busca texto en heading, links con title, o atributo aria-label
+    const heading = $el.find('h1,h2,h3,h4,h5,[class*="title"],[class*="name"],[class*="label"]').first().text().trim();
+    if (heading && heading.length > 2) return heading;
+    const linkTitle = $el.find('a[title]').first().attr('title') || '';
+    if (linkTitle.length > 2) return linkTitle;
+    return altText;
+  }
+
+  // 1. Intentar selectores comunes de productos (de más específico a más genérico)
+  const containerSelectors = [
+    '[class*="product-card"]', '[class*="product_card"]',
+    '[class*="product-item"]', '[class*="product_item"]',
+    '[class*="product-pod"]', 'article[class*="product"]',
+    'li[class*="product"]', '[data-product]', '[data-item]',
+    '[class*="item-card"]', '[class*="card-product"]',
+    'figure', '.thumbnail', '[class*="grid-item"]',
+    '[class*="catalog-item"]', '[class*="shop-item"]',
   ];
 
-  for (const sel of selectors) {
+  for (const sel of containerSelectors) {
     $(sel).each((i, el) => {
       const $el = $(el);
       const img = $el.find('img').first();
-      const src = img.attr('data-src') || img.attr('data-lazy-src') || img.attr('src') || '';
+      const src = img.attr('data-src') || img.attr('data-lazy') || img.attr('data-lazy-src') || img.attr('src') || '';
       const alt = img.attr('alt') || img.attr('title') || '';
-      const name = $el.find('h1,h2,h3,h4,[class*="title"],[class*="name"]').first().text().trim() || alt;
-
-      if (!src || !name || seen.has(src)) return;
+      const imgUrl = resolveUrl(src);
+      if (!imgUrl || seen.has(imgUrl)) return;
       if (isLogoOrBrandImage(src, alt)) return;
 
-      let imgUrl = src;
-      if (imgUrl.startsWith('//')) imgUrl = 'https:' + imgUrl;
-      else if (imgUrl.startsWith('/')) {
-        const u = new URL(url);
-        imgUrl = u.origin + imgUrl;
-      }
+      const name = getName($el, alt);
+      if (!name || name.length < 2) return;
 
-      seen.add(src);
+      seen.add(imgUrl);
       products.push({ name, src: imgUrl });
     });
-    if (products.length >= 3) break;
+    if (products.length >= 5) break;
   }
 
-  return products.map((p, idx) => ({
+  // 2. Si no encontramos nada, búsqueda genérica de imágenes con contexto
+  if (products.length === 0) {
+    $('img').each((i, el) => {
+      const $img = $(el);
+      const src = $img.attr('data-src') || $img.attr('data-lazy') || $img.attr('src') || '';
+      const alt = $img.attr('alt') || $img.attr('title') || '';
+      const imgUrl = resolveUrl(src);
+      if (!imgUrl || seen.has(imgUrl)) return;
+      if (isLogoOrBrandImage(src, alt)) return;
+      if (alt.length < 3) return; // sin descripción, probablemente decorativa
+
+      // Solo imágenes con tamaño razonable o sin restricción de tamaño
+      const w = parseInt($img.attr('width') || '0');
+      const h = parseInt($img.attr('height') || '0');
+      if ((w > 0 && w < 80) || (h > 0 && h < 80)) return;
+
+      // Busca nombre en el contexto cercano
+      const $parent = $img.closest('a, li, article, div, figure, section');
+      const name = getName($parent, alt);
+      if (!name || name.length < 2) return;
+
+      seen.add(imgUrl);
+      products.push({ name, src: imgUrl });
+    });
+  }
+
+  return products.slice(0, 50).map((p, idx) => ({
     id: `prod-${idx}`,
     name: p.name,
     slug: toSlug(p.name),
