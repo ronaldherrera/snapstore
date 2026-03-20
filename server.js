@@ -5,7 +5,9 @@ const archiver = require('archiver');
 const cors = require('cors');
 const path = require('path');
 const https = require('https');
-const puppeteer = require('puppeteer-core');
+const puppeteer = require('puppeteer-extra');
+const StealthPlugin = require('puppeteer-extra-plugin-stealth');
+puppeteer.use(StealthPlugin());
 
 const app = express();
 const PORT = process.env.PORT || 3000;
