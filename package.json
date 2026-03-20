@@ -1,11 +1,14 @@
 {
-  "name": "recopilador-productos",
+  "name": "snapstore",
   "version": "1.0.0",
-  "description": "Scraper de productos con descarga de imágenes",
-  "main": "server.js",
+  "description": "Descargador de imágenes de productos de tiendas online",
+  "main": "electron/main.js",
   "scripts": {
     "start": "node server.js",
-    "dev": "nodemon server.js"
+    "dev": "nodemon server.js",
+    "electron": "electron electron/main.js",
+    "build:win": "electron-builder --win",
+    "build:mac": "electron-builder --mac"
   },
   "dependencies": {
     "@sparticuz/chromium": "^121.0.0",
@@ -20,6 +23,33 @@
     "puppeteer-extra-plugin-stealth": "^2.11.2"
   },
   "devDependencies": {
+    "electron": "^41.0.3",
+    "electron-builder": "^26.8.1",
     "nodemon": "^3.0.2"
+  },
+  "build": {
+    "appId": "com.ronaldherrera.snapstore",
+    "productName": "SnapStore",
+    "files": [
+      "electron/**/*",
+      "server.js",
+      "public/**/*",
+      "node_modules/**/*",
+      "!node_modules/electron/**",
+      "!node_modules/electron-builder/**",
+      "!node_modules/nodemon/**"
+    ],
+    "win": {
+      "target": [{ "target": "nsis", "arch": ["x64"] }]
+    },
+    "nsis": {
+      "oneClick": true,
+      "deleteAppDataOnUninstall": true,
+      "shortcutName": "SnapStore"
+    },
+    "mac": {
+      "target": "dmg",
+      "category": "public.app-category.utilities"
+    }
   }
 }
