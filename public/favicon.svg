@@ -16,26 +16,20 @@
       <stop offset="0%" stop-color="#ff6600" stop-opacity="0.9"/>
       <stop offset="100%" stop-color="#ff6600" stop-opacity="0"/>
     </linearGradient>
-    <linearGradient id="prismFill" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="rgba(255,255,255,0.15)"/>
-      <stop offset="100%" stop-color="rgba(255,255,255,0.04)"/>
-    </linearGradient>
   </defs>
 
   <!-- Fondo negro -->
   <rect width="32" height="32" rx="7" fill="#000"/>
 
-  <!-- Rayos de luz dispersada (derecha del prisma) -->
-  <line x1="18" y1="20" x2="31" y2="13" stroke="url(#ray1)" stroke-width="1.2"/>
-  <line x1="18" y1="20" x2="31" y2="17" stroke="url(#ray2)" stroke-width="1.2"/>
-  <line x1="18" y1="20" x2="31" y2="21" stroke="url(#ray3)" stroke-width="1.2"/>
-  <line x1="18" y1="20" x2="31" y2="25" stroke="url(#ray4)" stroke-width="1.2"/>
+  <!-- Prisma triangular (detrás) -->
+  <polygon points="16,5 7,26 25,26" fill="#fff" stroke="#fff" stroke-width="1.2" stroke-linejoin="round"/>
 
   <!-- Rayo entrante (izquierda) -->
-  <line x1="1" y1="17" x2="11" y2="17" stroke="rgba(255,255,255,0.6)" stroke-width="1"/>
+  <line x1="1" y1="19" x2="16" y2="19" stroke="rgba(255,255,255,0.6)" stroke-width="1"/>
 
-  <!-- Prisma triangular -->
-  <polygon points="16,5 7,26 25,26" fill="url(#prismFill)" stroke="rgba(255,255,255,0.7)" stroke-width="1.2" stroke-linejoin="round"/>
-  <!-- Faceta interna -->
-  <line x1="16" y1="5" x2="16" y2="26" stroke="rgba(255,255,255,0.15)" stroke-width="0.6"/>
+  <!-- Rayos de luz dispersada (delante del prisma) -->
+  <line x1="16" y1="19" x2="31" y2="9"  stroke="url(#ray1)" stroke-width="1.2" stroke-linecap="round"/>
+  <line x1="16" y1="19" x2="31" y2="14" stroke="url(#ray2)" stroke-width="1.2" stroke-linecap="round"/>
+  <line x1="16" y1="19" x2="31" y2="20" stroke="url(#ray3)" stroke-width="1.2" stroke-linecap="round"/>
+  <line x1="16" y1="19" x2="31" y2="25" stroke="url(#ray4)" stroke-width="1.2" stroke-linecap="round"/>
 </svg>
