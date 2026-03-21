@@ -22,13 +22,10 @@
           <span class="logo-main">Snap</span><span class="logo-sub">Store</span>
         </div>
         <nav class="header-nav" id="headerActions">
-          <div class="download-local-wrap">
-            <a class="btn-download-local" href="https://github.com/ronaldherrera/snapstore/releases/latest/download/SnapStore.Setup.1.0.0.exe" target="_blank" rel="noopener">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-              Versión local · Windows
-            </a>
-            <span class="download-local-note">⚠️ Windows mostrará un aviso de seguridad — haz clic en <strong>"Más información" → "Ejecutar de todas formas"</strong></span>
-          </div>
+          <button class="btn-download-local" onclick="openDownloadModal()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Versión local
+          </button>
           <span class="nav-stat" id="countBadge" style="display:none">0 productos</span>
           <button class="btn-nav-action" id="btnClear" onclick="clearAll()" style="display:none">
             NUEVA BÚSQUEDA &nbsp;→
@@ -246,5 +243,41 @@
   <div class="toast-container" id="toastContainer"></div>
 
   <script src="app.js"></script>
+  <!-- Modal descarga local -->
+  <div class="modal-backdrop" id="downloadModal" onclick="closeDownloadModal(event)">
+    <div class="modal-box">
+      <button class="modal-close" onclick="closeDownloadModal()">✕</button>
+
+      <div class="modal-icon">
+        <svg viewBox="0 0 32 32" width="56" height="56" xmlns="http://www.w3.org/2000/svg">
+          <rect width="32" height="32" rx="7" fill="#000"/>
+          <line x1="18" y1="20" x2="31" y2="13" stroke="#00e5ff" stroke-width="1.2"/>
+          <line x1="18" y1="20" x2="31" y2="17" stroke="#00ff88" stroke-width="1.2"/>
+          <line x1="18" y1="20" x2="31" y2="21" stroke="#ffe600" stroke-width="1.2"/>
+          <line x1="18" y1="20" x2="31" y2="25" stroke="#ff6600" stroke-width="1.2"/>
+          <line x1="1" y1="17" x2="11" y2="17" stroke="rgba(255,255,255,0.6)" stroke-width="1"/>
+          <polygon points="16,5 7,26 25,26" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.7)" stroke-width="1.2" stroke-linejoin="round"/>
+        </svg>
+      </div>
+
+      <h2 class="modal-title"><span>Snap</span>Store — Versión local</h2>
+      <p class="modal-desc">La versión de escritorio funciona directamente desde tu ordenador, sin restricciones de protección anti-bot.</p>
+
+      <div class="modal-warning">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        <div>
+          <strong>Aviso de seguridad de Windows</strong>
+          <p>Al instalar, Windows SmartScreen puede bloquear la app por no tener certificado digital. Haz clic en <strong>"Más información"</strong> y luego en <strong>"Ejecutar de todas formas"</strong>.</p>
+        </div>
+      </div>
+
+      <a class="modal-download-btn" href="https://github.com/ronaldherrera/snapstore/releases/latest/download/SnapStore.Setup.1.0.0.exe">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Descargar para Windows · 160MB
+      </a>
+      <p class="modal-req">Requiere Windows 10/11 (64 bits)</p>
+    </div>
+  </div>
+
 </body>
 </html>

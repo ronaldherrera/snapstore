@@ -635,3 +635,14 @@ function iconX() {
 function iconMagic() {
   return `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 4V2M15 16v-2M8 9h2M20 9h2M17.8 11.8L19 13M17.8 6.2L19 5M3 21l9-9M12.2 6.2L11 5"/></svg>`;
 }
+
+// ============ MODAL DESCARGA ============
+function openDownloadModal() {
+  document.getElementById('downloadModal').classList.add('open');
+}
+function closeDownloadModal(e) {
+  if (!e || e.target === document.getElementById('downloadModal')) {
+    document.getElementById('downloadModal').classList.remove('open');
+  }
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDownloadModal(); });
