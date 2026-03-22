@@ -143,8 +143,8 @@ body {
 /* Logo estilo "RonaldHerrera" — dos pesos */
 .logo {
   display: flex;
-  align-items: baseline;
-  gap: 0;
+  align-items: center;
+  gap: 7px;
   line-height: 1;
   text-decoration: none;
 }
@@ -652,6 +652,9 @@ body {
   text-decoration: none;
   font-size: 0.78rem;
   font-weight: 600;
+  font-family: inherit;
+  background: transparent;
+  cursor: pointer;
   transition: all var(--transition);
 }
 .warning-download-btn:hover {

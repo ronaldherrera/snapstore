@@ -1,19 +1,19 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
   <defs>
     <linearGradient id="ray1" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#00e5ff" stop-opacity="0.9"/>
+      <stop offset="0%" stop-color="#00e5ff" stop-opacity="1"/>
       <stop offset="100%" stop-color="#00e5ff" stop-opacity="0"/>
     </linearGradient>
     <linearGradient id="ray2" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#00ff88" stop-opacity="0.9"/>
+      <stop offset="0%" stop-color="#00ff88" stop-opacity="1"/>
       <stop offset="100%" stop-color="#00ff88" stop-opacity="0"/>
     </linearGradient>
     <linearGradient id="ray3" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#ffe600" stop-opacity="0.9"/>
+      <stop offset="0%" stop-color="#ffe600" stop-opacity="1"/>
       <stop offset="100%" stop-color="#ffe600" stop-opacity="0"/>
     </linearGradient>
     <linearGradient id="ray4" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#ff6600" stop-opacity="0.9"/>
+      <stop offset="0%" stop-color="#ff6600" stop-opacity="1"/>
       <stop offset="100%" stop-color="#ff6600" stop-opacity="0"/>
     </linearGradient>
   </defs>
@@ -25,11 +25,11 @@
   <polygon points="16,5 7,26 25,26" fill="#fff" stroke="#fff" stroke-width="1.2" stroke-linejoin="round"/>
 
   <!-- Rayo entrante (izquierda) -->
-  <line x1="1" y1="19" x2="16" y2="19" stroke="rgba(255,255,255,0.6)" stroke-width="1"/>
+  <line x1="1" y1="19" x2="16" y2="19" stroke="rgba(255,255,255,0.6)" stroke-width="1.8" stroke-linecap="round"/>
 
   <!-- Rayos de luz dispersada (delante del prisma) -->
-  <line x1="16" y1="19" x2="31" y2="9"  stroke="url(#ray1)" stroke-width="1.2" stroke-linecap="round"/>
-  <line x1="16" y1="19" x2="31" y2="14" stroke="url(#ray2)" stroke-width="1.2" stroke-linecap="round"/>
-  <line x1="16" y1="19" x2="31" y2="20" stroke="url(#ray3)" stroke-width="1.2" stroke-linecap="round"/>
-  <line x1="16" y1="19" x2="31" y2="25" stroke="url(#ray4)" stroke-width="1.2" stroke-linecap="round"/>
+  <line x1="16" y1="19" x2="31" y2="9"  stroke="url(#ray1)" stroke-width="2" stroke-linecap="round"/>
+  <line x1="16" y1="19" x2="31" y2="14" stroke="url(#ray2)" stroke-width="2" stroke-linecap="round"/>
+  <line x1="16" y1="19" x2="31" y2="20" stroke="url(#ray3)" stroke-width="2" stroke-linecap="round"/>
+  <line x1="16" y1="19" x2="31" y2="25" stroke="url(#ray4)" stroke-width="2" stroke-linecap="round"/>
 </svg>

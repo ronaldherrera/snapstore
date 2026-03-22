@@ -1,7 +1,16 @@
 {
   "permissions": {
     "allow": [
-      "Bash(gh auth:*)"
+      "Bash(gh auth:*)",
+      "Bash(npm run:*)",
+      "Bash(wmic logicaldisk:*)",
+      "Bash(mkdir -p \"D:/electron-cache\")",
+      "Bash(ELECTRON_CACHE=\"D:/electron-cache\" npm run build:win)",
+      "Bash(CSC_IDENTITY_AUTO_DISCOVERY=false ELECTRON_CACHE=\"D:/electron-cache\" npm run build:win)",
+      "Bash(CSC_IDENTITY_AUTO_DISCOVERY=false WIN_CSC_LINK=\"\" ELECTRON_CACHE=\"D:/electron-cache\" npm run build:win)",
+      "Bash(powershell -Command \"Compress-Archive -Path ''win-unpacked'' -DestinationPath ''SnapStore-Windows.zip'' -Force\")",
+      "Bash(ls -lh \"d:/Mis Desarrollos/Ronald-Herrera_2.0/public/proyectos/Recopilador_productos/dist/\"*.exe)",
+      "Bash(node scripts/create-icon.js)"
     ]
   }
 }

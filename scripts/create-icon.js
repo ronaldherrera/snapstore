@@ -43,9 +43,9 @@ async function createIcon() {
   drawLine(16, 256, enter.x, enter.y, white, 14);
 
   // Rayos dispersados — sólidos
-  drawLine(exit.x, exit.y, 496,  144, cyan,   18);
-  drawLine(exit.x, exit.y, 496,  256, green,  18);
-  drawLine(exit.x, exit.y, 496,  368, yellow, 18);
+  drawLine(exit.x, exit.y, 496,  144, cyan,   26);
+  drawLine(exit.x, exit.y, 496,  256, green,  26);
+  drawLine(exit.x, exit.y, 496,  368, yellow, 26);
 
   // Prisma: 3 lados con trazo grueso
   drawLine(top.x, top.y, bl.x, bl.y, white, 12);
